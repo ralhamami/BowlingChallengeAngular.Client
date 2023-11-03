@@ -1,6 +1,6 @@
 # Live Demo
 
-Live Demo is Available at: https://bowlingscoreclient.azurewebsites.net/bowling
+Live Demo is Available at: https://bowlingscoreclient.azurewebsites.net/
 
 # BowlingChallengeAngularClient
 
