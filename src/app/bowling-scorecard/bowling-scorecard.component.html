@@ -2,25 +2,21 @@
 <div class="row mx-auto my-3">
   <div
     *ngFor="let frame of frames"
-    class="col-1 border border-3 border-secondary mx-auto"
+    class="shadow col-1 mx-auto"
+    [ngClass]="
+      frame.isCurrentFrame
+        ? 'border border-3 border-danger'
+        : 'border border-3 border-secondary'
+    "
+    style="font-family: cursive"
   >
-    <div class="row" style="min-height: 2em">
-      <div class="col-6 p-1">
+    <div class="row justify-content-end" style="min-height: 2em">
+      <div
+        class="col-4 p-1 border border-secondary text-center"
+        *ngFor="let shot of frame.shots"
+      >
         <div class="p-0">
-          {{
-            frame.shots[0] !== null && frame.shots[0] !== 0
-              ? frame.shots[0]
-              : "-"
-          }}
-        </div>
-      </div>
-      <div class="col-6 border border-secondary p-1">
-        <div class="p-0">
-          {{
-            frame.shots[1] !== null && frame.shots[1] !== 0
-              ? frame.shots[1]
-              : "-"
-          }}
+          {{ shot !== null && shot !== 0 ? shot : "-" }}
         </div>
       </div>
     </div>
@@ -34,24 +30,35 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-6 mx-auto">
+  <div class="col-4 col-lg-2 mx-auto">
     <label for="shotInput" class="form-label">Enter Shot:</label>
     <input
       name="shotInput"
       id="shotInput"
+      #shotInput
       class="form-control"
       [(ngModel)]="pinsKnockedDown"
-      type="text"
-      #shotInput="ngModel"
+      type="number"
+      min="0"
+      max="10"
+      required
     />
+    <div *ngIf="apiError" class="text-danger">{{ apiError }}</div>
   </div>
 </div>
-<div class="row">
+<div class="row justify-content-center">
   <button
     id="btnThrowBall"
-    class="btn btn-primary col-10 mt-3 mx-auto"
+    class="btn btn-primary col-2 col-lg-1 mt-3 me-3"
     (click)="makeShot()"
   >
-    Throw the Ball
+    Submit Shot
+  </button>
+  <button
+    id="btnThrowBall"
+    class="btn btn-danger col-2 col-lg-1 mt-3"
+    (click)="reset()"
+  >
+    Reset Frames
   </button>
 </div>

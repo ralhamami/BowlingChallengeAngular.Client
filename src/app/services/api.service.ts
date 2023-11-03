@@ -6,6 +6,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Frame } from '../models/frames-response.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -15,13 +16,19 @@ export class ApiService {
 
   getFrames(): Observable<Frame[]> {
     return this.http
-      .get<Frame[]>(`https://localhost:7119/api/Frames`)
+      .get<Frame[]>(`${environment.apiUrl}/frames`)
       .pipe(catchError(this.handleError));
   }
 
-  postShot(pinsKnockedDown: number): Observable<Frame[]> {
+  postShot(pinsKnockedDown: number | null): Observable<Frame[]> {
     return this.http
-      .get<Frame[]>(`https://localhost:7119/api/Frames/${pinsKnockedDown}`)
+      .get<Frame[]>(`${environment.apiUrl}/frames/${pinsKnockedDown}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  resetFrames(): Observable<Frame[]> {
+    return this.http
+      .post<Frame[]>(`${environment.apiUrl}/frames/reset`, null)
       .pipe(catchError(this.handleError));
   }
 
@@ -35,8 +42,8 @@ export class ApiService {
       console.error(
         `Backend returned code ${error.status}, ` + `body was: ${error.error}`
       );
-      if (error.error && error.error.errors) {
-        const errors = Object.values(error.error.errors);
+      if (error.error) {
+        const errors = Object.values(error.error);
         var webapierror = '';
         errors.map((m: unknown) => {
           webapierror += m + '\n';

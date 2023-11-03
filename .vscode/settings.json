@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/653a2357-f0ed-423f-9a77-7fa84781b516/resourceGroups/BowlingScore_group/providers/Microsoft.Web/sites/BowlingScore",
+  "appService.deploySubpath": "dist\\bowling-challenge-angular.client"
+}
