@@ -1,0 +1,57 @@
+<h1 class="text-center">Bowling Score Challenge</h1>
+<div class="row mx-auto my-3">
+  <div
+    *ngFor="let frame of frames"
+    class="col-1 border border-3 border-secondary mx-auto"
+  >
+    <div class="row" style="min-height: 2em">
+      <div class="col-6 p-1">
+        <div class="p-0">
+          {{
+            frame.shots[0] !== null && frame.shots[0] !== 0
+              ? frame.shots[0]
+              : "-"
+          }}
+        </div>
+      </div>
+      <div class="col-6 border border-secondary p-1">
+        <div class="p-0">
+          {{
+            frame.shots[1] !== null && frame.shots[1] !== 0
+              ? frame.shots[1]
+              : "-"
+          }}
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center" style="min-height: 2em">
+      {{
+        frame.totalScore !== null && frame.totalScore !== 0
+          ? frame.totalScore
+          : "-"
+      }}
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-6 mx-auto">
+    <label for="shotInput" class="form-label">Enter Shot:</label>
+    <input
+      name="shotInput"
+      id="shotInput"
+      class="form-control"
+      [(ngModel)]="pinsKnockedDown"
+      type="text"
+      #shotInput="ngModel"
+    />
+  </div>
+</div>
+<div class="row">
+  <button
+    id="btnThrowBall"
+    class="btn btn-primary col-10 mt-3 mx-auto"
+    (click)="makeShot()"
+  >
+    Throw the Ball
+  </button>
+</div>
