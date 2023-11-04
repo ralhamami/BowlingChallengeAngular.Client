@@ -14,18 +14,21 @@ import { environment } from '../../environments/environment';
 export class ApiService {
   constructor(private http: HttpClient) {}
 
+  //Gets all frames. Only used when we first load.
   getFrames(): Observable<Frame[]> {
     return this.http
       .get<Frame[]>(`${environment.apiUrl}/frames`)
       .pipe(catchError(this.handleError));
   }
 
+  //Posts the shot entered.
   postShot(pinsKnockedDown: number | null): Observable<Frame[]> {
     return this.http
       .get<Frame[]>(`${environment.apiUrl}/frames/${pinsKnockedDown}`)
       .pipe(catchError(this.handleError));
   }
 
+  //Resets the scorecard.
   resetFrames(): Observable<Frame[]> {
     return this.http
       .post<Frame[]>(`${environment.apiUrl}/frames/reset`, null)

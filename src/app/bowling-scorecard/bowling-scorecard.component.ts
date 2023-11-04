@@ -14,17 +14,21 @@ export class BowlingScorecardComponent implements OnInit {
   apiError: string | null = null;
   @ViewChild('shotInput', { read: ElementRef }) shotInput: ElementRef | null =
     null;
+  isLoading: boolean = true;
 
   constructor(private apiService: ApiService) {}
 
+  //Get frames on initialization of component.
   ngOnInit(): void {
     this.apiService.getFrames().subscribe({
       next: (response) => {
         this.frames = response;
+        this.isLoading = false;
       },
     });
   }
 
+  //Call Api service to post the shot input.
   makeShot() {
     this.apiService.postShot(this.pinsKnockedDown ?? 0).subscribe({
       next: (response) => {
@@ -36,12 +40,14 @@ export class BowlingScorecardComponent implements OnInit {
       },
     });
 
+    //Set focus to input.
     if (this.shotInput !== null) {
       this.pinsKnockedDown = null;
       this.shotInput.nativeElement.focus();
     }
   }
 
+  //Call Api service to reset the whole scorecard.
   reset() {
     this.apiService.resetFrames().subscribe({
       next: (response) => {
@@ -53,6 +59,7 @@ export class BowlingScorecardComponent implements OnInit {
       },
     });
 
+    //Set focus to input.
     if (this.shotInput !== null) {
       this.pinsKnockedDown = null;
       this.shotInput.nativeElement.focus();

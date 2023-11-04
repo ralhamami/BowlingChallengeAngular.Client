@@ -1,64 +1,69 @@
 <h1 class="text-center">Bowling Score Challenge</h1>
-<div class="row mx-auto my-3">
-  <div
-    *ngFor="let frame of frames"
-    class="shadow col-1 mx-auto"
-    [ngClass]="
-      frame.isCurrentFrame
-        ? 'border border-3 border-danger'
-        : 'border border-3 border-secondary'
-    "
-    style="font-family: cursive"
-  >
-    <div class="row justify-content-end" style="min-height: 2em">
-      <div
-        class="col-4 p-1 border border-secondary text-center"
-        *ngFor="let shot of frame.shots"
-      >
-        <div class="p-0">
-          {{ shot !== null && shot !== 0 ? shot : "-" }}
+<div *ngIf="isLoading; else mainContent" class="d-flex justify-content-center">
+  <div class="spinner-border" role="status"></div>
+</div>
+<ng-template #mainContent>
+  <div class="row mx-auto my-3">
+    <div
+      *ngFor="let frame of frames"
+      class="shadow col-1 mx-auto"
+      [ngClass]="
+        frame.isCurrentFrame
+          ? 'border border-3 border-danger'
+          : 'border border-3 border-secondary'
+      "
+      style="font-family: cursive"
+    >
+      <div class="row justify-content-end" style="min-height: 2em">
+        <div
+          class="col-4 p-1 border border-secondary text-center"
+          *ngFor="let shot of frame.shots"
+        >
+          <div class="p-0">
+            {{ shot !== null && shot !== 0 ? shot : "-" }}
+          </div>
         </div>
       </div>
-    </div>
-    <div class="row justify-content-center" style="min-height: 2em">
-      {{
-        frame.totalScore !== null && frame.totalScore !== 0
-          ? frame.totalScore
-          : "-"
-      }}
+      <div class="row justify-content-center" style="min-height: 2em">
+        {{
+          frame.totalScore !== null && frame.totalScore !== 0
+            ? frame.totalScore
+            : "-"
+        }}
+      </div>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-4 col-lg-2 mx-auto">
-    <label for="shotInput" class="form-label">Enter Shot:</label>
-    <input
-      name="shotInput"
-      id="shotInput"
-      #shotInput
-      class="form-control"
-      [(ngModel)]="pinsKnockedDown"
-      type="number"
-      min="0"
-      max="10"
-      required
-    />
-    <div *ngIf="apiError" class="text-danger">{{ apiError }}</div>
+  <div class="row">
+    <div class="col-4 col-lg-2 mx-auto">
+      <label for="shotInput" class="form-label">Enter Shot:</label>
+      <input
+        name="shotInput"
+        id="shotInput"
+        #shotInput
+        class="form-control"
+        [(ngModel)]="pinsKnockedDown"
+        type="number"
+        min="0"
+        max="10"
+        required
+      />
+      <div *ngIf="apiError" class="text-danger">{{ apiError }}</div>
+    </div>
   </div>
-</div>
-<div class="row justify-content-center">
-  <button
-    id="btnThrowBall"
-    class="btn btn-primary col-2 col-lg-1 mt-3 me-3"
-    (click)="makeShot()"
-  >
-    Submit Shot
-  </button>
-  <button
-    id="btnThrowBall"
-    class="btn btn-danger col-2 col-lg-1 mt-3"
-    (click)="reset()"
-  >
-    Reset Frames
-  </button>
-</div>
+  <div class="row justify-content-center">
+    <button
+      id="btnThrowBall"
+      class="btn btn-primary col-2 col-lg-1 mt-3 me-3"
+      (click)="makeShot()"
+    >
+      Submit Shot
+    </button>
+    <button
+      id="btnThrowBall"
+      class="btn btn-danger col-2 col-lg-1 mt-3"
+      (click)="reset()"
+    >
+      Reset Frames
+    </button>
+  </div>
+</ng-template>
